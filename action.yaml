@@ -1,0 +1,30 @@
+name: 'terraform-dependency-miner'
+description: 'Maps out a dependency tree for terraform and terragrunt repositories'
+branding:
+  icon: 'map'
+  color: 'white'
+inputs:
+  output_file:
+    description: 'Where to put the output'
+    required: false
+    default: 'dependencies.md'
+  output_format:
+    description: 'What do you want to output? `bullets` or `mermaid`'
+    required: false
+    default: 'bullets'
+  mermaid_direction:
+    description: 'top down (TD), or left right (LR)'
+    required: false
+    default: 'LR'
+  terraform_registry_token:
+    description: 'The token used to see in private registries'
+    required: false
+    default: "--"
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.output_file }}
+    - ${{ inputs.output_format }}
+    - ${{ inputs.mermaid_direction }}
+    - ${{ inputes.terraform_registry_token }}
