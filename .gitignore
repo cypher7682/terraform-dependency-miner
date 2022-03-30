@@ -1,0 +1,13 @@
+*__pycache__
+**/__pycache__/
+**/.idea/
+**/venv/
+*.pyc
+.vonage-aws-generated
+.okta-cache
+.vonage-aws
+.accounts
+debug.log
+build
+vonage_aws.egg-info
+**/.terraform/

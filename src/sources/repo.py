@@ -1,3 +1,4 @@
+import logging
 import uuid
 import shutil
 
@@ -24,6 +25,7 @@ class R:
         try:
             self.repo.git.reset('--hard', self.branch)
         except git.exc.GitCommandError as e:
+            logging.info(f"No branch '{self.branch}' - this one though")
             self.branch += "(DEAD)"
             self.dead_branch = True
 

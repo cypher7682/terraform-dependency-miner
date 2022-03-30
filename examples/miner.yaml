@@ -1,0 +1,36 @@
+name: Miner
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  dependency-grapher:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: checkout-my-junk
+      uses: actions/checkout@v2
+
+    - name: terraform-dependency-miner
+      uses: cypher7682/terraform-dependency-miner@v0.0.12
+      with:
+        output_file: README.md
+        output_format: mermaid
+        mermaid_direction: TD
+        terraform_registry_token: ${{ secrets.REGISTRY_TOKEN }}
+        github_token: ${{ secrets.PRIVATE_TOKEN }}
+
+    - name: commit-my-junk
+      uses: EndBug/add-and-commit@v7
+      with:
+        add: '.'
+        pull: '--rebase --autostash'
+        message: 'Dependency mapping'
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: push-my-junk
+      uses: actions-js/push@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
