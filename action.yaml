@@ -27,4 +27,4 @@ runs:
     - ${{ inputs.output_file }}
     - ${{ inputs.output_format }}
     - ${{ inputs.mermaid_direction }}
-    - ${{ inputes.terraform_registry_token }}
+    - ${{ inputs.terraform_registry_token }}

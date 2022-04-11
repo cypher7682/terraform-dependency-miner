@@ -1,0 +1,17 @@
+name: SemverRelease
+
+on:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  Tag-and-release:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Generate release
+      id: release
+      uses: home-furnishing-nordic/semver-release-manager@master
+      with:
+        github_token: "${{ secrets.GITHUB_TOKEN }}"
+        bump_type: "patch"
