@@ -1,7 +1,7 @@
 import re
 import uuid
 import logging
-import MinerExceptions
+import exceptions
 
 log = logging.getLogger()
 
@@ -52,11 +52,11 @@ class Base:
     # These methods MUST be overwritten in the extended class
     def _put_to_disk(self):
         '''This method MUST be overwritten in the extended classes'''
-        raise MinerExceptions.BaseClassException("The extended class has not extended the _put_to_disk method, and is therefore broken")
+        raise exceptions.BaseClassException("The extended class has not extended the _put_to_disk method, and is therefore broken")
 
     def _version(self):
-        raise MinerExceptions.BaseClassException("The extended class has not extended the _version method, and is therefore broken")
+        raise exceptions.BaseClassException("The extended class has not extended the _version method, and is therefore broken")
 
     def _name(self):
-        raise MinerExceptions.BaseClassException("The extended class has not extended the _name method, and is therefore broken")
+        raise exceptions.BaseClassException("The extended class has not extended the _name method, and is therefore broken")
 

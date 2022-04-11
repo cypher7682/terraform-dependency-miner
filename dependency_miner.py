@@ -1,4 +1,4 @@
-import MinerExceptions
+import exceptions
 from files import factory as file_factory
 from sources import factory as source_factory
 import os
@@ -28,7 +28,7 @@ class dependency:
                     try:
                         if f := file_factory.construct(file):
                             yield f
-                    except MinerExceptions.InvalidHCLException as e:
+                    except exceptions.InvalidHCLException as e:
                         logging.error(str(e))
                         continue
         else:
@@ -36,7 +36,7 @@ class dependency:
                 try:
                     if f := file_factory.construct(f"{self.source.disk_path}/{file}"):
                         yield f
-                except MinerExceptions.InvalidHCLException as e:
+                except exceptions.InvalidHCLException as e:
                     logging.error(str(e))
                     continue
 

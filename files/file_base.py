@@ -1,7 +1,7 @@
 import logging
 import os.path
 import hcl2
-import MinerExceptions
+import exceptions
 
 class Base:
     def __init__(self, file):
@@ -30,7 +30,7 @@ class Base:
                 self.hcl = hcl2.load(f)
                 return True
             except:
-                raise MinerExceptions.InvalidHCLException(f"{self.file} broke the HCL parser")
+                raise exceptions.InvalidHCLException(f"{self.file} broke the HCL parser")
 
 
     def _matches_file_String_ends(self):
@@ -56,4 +56,4 @@ class Base:
 
     # These methods MUST be overridden in the extended classes
     def _sources(self):
-        raise MinerExceptions.BaseClassException("The extended class has not extended the _name method, and is therefore broken")
+        raise exceptions.BaseClassException("The extended class has not extended the _name method, and is therefore broken")
