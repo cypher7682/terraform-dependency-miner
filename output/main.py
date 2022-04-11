@@ -9,26 +9,27 @@ class outputter:
         self.dependency_tree = dependency_tree
         self.dupes = []
         self.formatter = formatter
+        self.starter = "<!-- BEGIN_MINER_DOCS -->\n"
+        self.ender = "<!-- END_MINER_DOCS -->\n"
 
     def put(self, file):
         if not os.path.isfile(os.path.abspath(file)):
             with open(os.path.abspath(file), 'w') as f:
-                f.write("[comment]: <> (---MINER-START---)\n")
-                f.write("\n")
-                f.write("[comment]: <> (---MINER-END---)\n")
-                f.write("\n")
+                f.write(f"{self.starter}\n")
+                f.write(f"{self.ender}\n")
 
-
+        abort = False # this stops us doing silly things inside our own markdown
         write_back = True
         mem_file = []
 
         with open(os.path.abspath(file), 'r') as f:
             for line in f:
+                if line.startswith("```"):
+                    abort = abort == False
 
-                if line == "[comment]: <> (---MINER-START---)\n":
+                if line == self.starter and not abort:
                     write_back = False
-                    mem_file.append("[comment]: <> (---MINER-START---)\n")
-                    mem_file.append(f" \n")
+                    mem_file.append(f"{self.starter}\n")
 
                     for l in self.formatter.start():
                         if l:
@@ -43,9 +44,8 @@ class outputter:
                 if write_back:
                     mem_file.append(line)
 
-                elif line == "[comment]: <> (---MINER-END---)\n":
-                    mem_file.append(f" \n")
-                    mem_file.append("[comment]: <> (---MINER-END---)\n")
+                elif line == self.ender and not abort:
+                    mem_file.append(f"\n{self.ender}")
                     write_back = True
 
         with open(file, 'w') as f:
