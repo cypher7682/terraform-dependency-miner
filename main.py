@@ -20,6 +20,7 @@ if __name__ == "__main__":
          "version": False},
         "./"
     )
+    # TODO: Make this a git repo ^
 
     # Create the dependency object
     d = dependency(s, recurse=True)
@@ -31,7 +32,5 @@ if __name__ == "__main__":
     out = outputter(d.get_dependency_tree(), formatter[OUTPUT_FORMAT])
     out.put(file=OUTPUT_FILE)
 
-    # TODO: If the output file exists, replace between strings
-    # TODO: If file doesn't exist, create it
-    # TODO: If we created a file, include breakers
-    # TODO: If the breaker doesn't exist
+    # TODO: Commit changes to git repo
+    # TODO: Push changes to PR
