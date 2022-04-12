@@ -41,8 +41,8 @@ class dependency:
                     continue
 
     def _extract_child_sources(self):
-        ''' Looks for kkk strings inside the files found by _find_matching_files
-        Each kkk is then fetched to disk on a unique UUID, and instantiates another dependency
+        ''' Looks for source strings inside the files found by _find_matching_files
+        Each match is then fetched to disk on a unique UUID, and instantiates another dependency
         :returns dependency '''
         if not self.source.dead:
             for f in self._find_matching_files():
