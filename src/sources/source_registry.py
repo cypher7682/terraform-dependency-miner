@@ -15,7 +15,7 @@ class Source(Base):
     type = "Registry"
 
     def _sub_init(self):
-        self.headers = {"Authorization": f"Bearer {TFR_TOKEN}"} if sys.argv[4] == "--" else {}
+        self.headers = {} if sys.argv[4] == "--" else {"Authorization": f"Bearer {TFR_TOKEN}"}
         self.data = self.source_string.split("||")
         self.org = self.data[1]
         self.module = self.data[2]

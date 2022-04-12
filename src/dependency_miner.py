@@ -49,8 +49,9 @@ class dependency:
                 try:
                     for s in source_factory.get(f):
                         yield s
-                except KeyError:
-                    yield
+                except KeyError as e:
+                    logging.error(e)
+                    exit(1)
 
     def get_dependency_tree(self) -> dict:
         child_sources = {}
