@@ -34,4 +34,4 @@ class Source(Base):
         self.real_me.version()
 
     def _name(self):
-        return f"{self.proto}github.com/{self.other_shit}"
+        return self.real_me.name()
