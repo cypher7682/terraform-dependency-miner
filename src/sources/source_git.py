@@ -20,6 +20,7 @@ class Source(Base):
         self.clone_url = f"{self.url}" if sys.argv[6] == "--" else f"{sys.argv[6]}@{self.url}"
         self.org = data[2].strip()
         self.repo = data[3].strip()
+        self.repo = self.repo if str(self.repo).endswith(".git") else f"{self.repo}.git"
         self.path = data[4].strip() or ''
         self.branch = data[5].strip() or 'origin/master'
 
