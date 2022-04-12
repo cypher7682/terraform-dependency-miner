@@ -19,11 +19,15 @@ inputs:
   terraform_registry_token:
     description: 'The token used to see in private registries'
     required: false
-    default: "--"
+    default: '--'
   log_level:
     description: 'sets log level (debug|info|warn)'
     required: false
-    default: "warn"
+    default: 'warn'
+  github_token:
+    description: 'Provide a github token to access private repos'
+    required: false
+    default: '--'
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -33,3 +37,4 @@ runs:
     - ${{ inputs.mermaid_direction }}
     - ${{ inputs.terraform_registry_token }}
     - ${{ inputs.log_level }}
+    - ${{ inputs.github_token }}

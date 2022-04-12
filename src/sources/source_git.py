@@ -1,5 +1,6 @@
 import logging
 import os.path
+import sys
 
 from sources.source_base import Base
 import shutil
@@ -15,11 +16,12 @@ class Source(Base):
     # These methods MUST be overwritten in the extended class
     def _get_facts_from_source(self, data):
         self.protocol = data[0].strip()
-        self.url      = data[1].strip()
-        self.org      = data[2].strip()
-        self.repo     = data[3].strip()
-        self.path     = data[4].strip() or ''
-        self.branch   = data[5].strip() or 'origin/master'
+        self.url = data[1].strip()
+        self.clone_url = f"{self.url}" if sys.argv[6] == "--" else f"{sys.argv[6]}@{self.url}"
+        self.org = data[2].strip()
+        self.repo = data[3].strip()
+        self.path = data[4].strip() or ''
+        self.branch = data[5].strip() or 'origin/master'
 
         self.repo_root = os.path.abspath(f"/tmp/{self.url}/{self.org}/{self.repo}/{self.branch}")
         self.disk_path = os.path.abspath(f"{self.repo_root}/{self.path}")
@@ -36,7 +38,7 @@ class Source(Base):
                 shutil.rmtree(self.repo_root)
             except FileNotFoundError:
                 r = git.Repo.clone_from(
-                    f"{self.protocol}://{self.url}/{self.org}/{self.repo}",
+                    f"{self.protocol}://{self.clone_url}/{self.org}/{self.repo}",
                     self.repo_root
                 )
 
