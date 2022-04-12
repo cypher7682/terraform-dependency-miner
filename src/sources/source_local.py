@@ -21,4 +21,4 @@ class Source(Base):
         return "current"
 
     def _name(self):
-        return f"{self.source_string}"
+        return f"'{self.source_string}'"

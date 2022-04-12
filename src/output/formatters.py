@@ -45,7 +45,8 @@ class fmt:
             pass
 
         def post(self, parent_source, child_source, layer):
-            return f"    {parent_source.uuid}[{parent_source.name()}] ---> {child_source.uuid}[{child_source.name()}];"
+            name = parent_source.name() if layer else "This"
+            return f"    {parent_source.uuid}[{name}] ---> {child_source.uuid}[{child_source.name()}];"
 
         def finish(self):
             for line in ['```']:
