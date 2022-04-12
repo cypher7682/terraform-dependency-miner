@@ -31,6 +31,3 @@ if __name__ == "__main__":
     }
     out = outputter(d.get_dependency_tree(), formatter[OUTPUT_FORMAT])
     out.put(file=OUTPUT_FILE)
-
-    # TODO: Commit changes to git repo
-    # TODO: Push changes to PR
