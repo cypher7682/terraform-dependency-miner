@@ -46,8 +46,11 @@ class dependency:
         :returns dependency '''
         if not self.source.dead:
             for f in self._find_matching_files():
-                for s in source_factory.get(f):
-                    yield s
+                try:
+                    for s in source_factory.get(f):
+                        yield s
+                except KeyError:
+                    yield
 
     def get_dependency_tree(self) -> dict:
         child_sources = {}

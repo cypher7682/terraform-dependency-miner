@@ -15,7 +15,7 @@ class Source(Base):
     type = "Registry"
 
     def _sub_init(self):
-        self.headers = {"Authorization": TFR_TOKEN}
+        self.headers = {"Authorization": f"Bearer {TFR_TOKEN}"} if sys.argv[4] == "--" else {}
         self.data = self.source_string.split("||")
         self.org = self.data[1]
         self.module = self.data[2]
@@ -56,9 +56,13 @@ class Source(Base):
                          headers=self.headers)
 
         versions = []
-        for module in r.json()['modules']:
-            for version in module['versions']:
-                versions.append(version['version'])
+        try:
+            for module in r.json()['modules']:
+                for version in module['versions']:
+                    versions.append(version['version'])
+        except KeyError as e:
+            logging.error(r.json())
+            raise KeyError(e)
 
         return versions
 
