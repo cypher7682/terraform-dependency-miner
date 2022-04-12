@@ -23,7 +23,7 @@ class fmt:
 
         def start(self):
             for line in [
-                " ## Dependency tree"
+                "## Dependencies"
             ]:
                 yield line
 
@@ -36,6 +36,7 @@ class fmt:
 
         def start(self):
             for line in [
+                '## Dependencies',
                 '```mermaid',
                 f'flowchart {self.direction}'
             ]:
