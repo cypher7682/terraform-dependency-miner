@@ -6,7 +6,13 @@ import os
 import sys
 import logging
 
-logging.basicConfig(level=logging.WARN)
+if sys.argv[5] == "debug":
+    logging.basicConfig(level=logging.DEBUG)
+elif sys.argv[5] == "info":
+    logging.basicConfig(level=logging.INFO)
+elif sys.argv[5] == "warn":
+    logging.basicConfig(level=logging.WARN)
+
 
 OUTPUT_FILE = sys.argv[1]
 OUTPUT_FORMAT = sys.argv[2]

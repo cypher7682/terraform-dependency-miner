@@ -1,3 +1,4 @@
+import logging
 import os.path
 
 from sources.source_base import Base
@@ -46,6 +47,7 @@ class Source(Base):
         try:
             r.git.reset('--hard', self.branch)
         except git.exc.GitCommandError:
+            logging.info(f"No branch '{self.branch}'")
             self.branch = f'{self.branch}(DEAD)'
             self.dead = True
 
