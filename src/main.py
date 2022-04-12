@@ -22,7 +22,7 @@ if __name__ == "__main__":
     # Create the primary source from where to initiate the smashy
     s = source_factory.getSpecificSource(
         'local',
-        {"source": os.path.relpath(os.path.expanduser("./")),
+        {"source": "./",
          "version": False},
         "./"
     )
