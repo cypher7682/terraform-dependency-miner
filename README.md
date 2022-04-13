@@ -2,6 +2,8 @@
 
 Will mine out terraform dependencies and display them in a searchable or graphy format.
 
+This can be plugged into terraform _or_ terragrunt. 
+
 ## What it do
 
 ### Mermaid
