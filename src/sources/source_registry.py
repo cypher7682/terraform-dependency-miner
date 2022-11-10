@@ -22,11 +22,11 @@ class Source(Base):
         self.cloud = self.data[3]
 
         if not self.data[0] or self.data[0] == '/':
-            self.url = "registry.terraform.io/"
+            self.url = "registry.terraform.io"
         else:
-            self.url = self.data[0]
+            self.url = self.data[0].strip("/")
 
-        self.public = self.url != "app.terraform.io/"
+        self.public = self.url != "app.terraform.io"
 
         if "version" in self.source_hcl:
             if self.source_hcl['version']:
@@ -49,11 +49,11 @@ class Source(Base):
 
     def _get_versions(self):
         if self.public:
-            url = f"https://{self.url}v1/modules"
+            url = f"https://{self.url}/v1/modules"
         else:
-            url = f"https://{self.url}api/registry/v1/modules"
-        r = requests.get(url=f"{url}/{self.org}/{self.module}/{self.cloud}/versions",
-                         headers=self.headers)
+            url = f"https://{self.url}/api/registry/v1/modules"
+        url = f"{url}/{self.org}/{self.module}/{self.cloud}/versions"
+        r = requests.get(url=url, headers=self.headers)
 
         versions = []
         try:
@@ -61,7 +61,8 @@ class Source(Base):
                 for version in module['versions']:
                     versions.append(version['version'])
         except KeyError as e:
-            logging.error(r.json())
+            logging.error(url)
+            logging.error(f"(96) Failed: {r.json()}")
             raise KeyError(e)
 
         return versions
@@ -73,12 +74,17 @@ class Source(Base):
             try:
                 source = f"git::{r.json()['data']['attributes']['vcs-repo']['repository-http-url']}?ref=v{version}"
             except KeyError:
-                logging.error(r.json())
+                logging.error(source)
+                logging.error(f"(153) Failure because of '{r.json()}'")
                 exit()
         else:
             url = f'https://{self.url}/v1/modules/{self.org}/{self.module}/{self.cloud}/{version}/download'
             r = requests.get(url=url, headers = self.headers)
-            source = r.headers['X-Terraform-Get']
+            try:
+                source = r.headers['X-Terraform-Get']
+            except KeyError as e:
+                logging.error(f"(1743) {self.org}/{self.module}/{self.cloud} has no 'X-Terraform-Get' header, which tells us where to fetch the module from")
+                raise e
         s = {"source": source}
 
         sub_source = source_git.Source(s)
